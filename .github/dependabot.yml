@@ -27,3 +27,8 @@ updates:
     labels:
       - dependencies
       - ci
+    ignore:
+      # The action version must track rust-toolchain.toml, which pins the
+      # toolchain to 1.88. Bumping the action here would silently move CI
+      # off the pinned toolchain, so the pin is changed by hand instead.
+      - dependency-name: dtolnay/rust-toolchain

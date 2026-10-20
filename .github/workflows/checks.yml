@@ -6,6 +6,9 @@ on:
     branches: [main]
   schedule:
     - cron: '0 6 * * *'
+  # Manual re-run of the gate, e.g. to reproduce a runner-specific failure
+  # without waiting for the next push or the nightly cron.
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
