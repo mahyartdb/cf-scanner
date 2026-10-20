@@ -29,13 +29,17 @@ Added / Changed / Fixed / Deprecated / Removed / Security, newest on top.
   tests that touch it are now serialized behind a test-only mutex.
 
 ### Security
-- **9 RustSec advisories cleared.** `zip` 7.2.0 -> 9.0.5 (RUSTSEC-2026-0368,
+- **12 RustSec advisories cleared.** `zip` 7.2.0 -> 9.0.5 (RUSTSEC-2026-0368,
   `ZipArchive::extract` creating symlinks outside the destination),
-  `rustls` 0.23.45 -> 0.23.46 (4 advisories) and `quinn-proto` 0.11.16 ->
-  0.11.19 (5 advisories). `cargo audit` is clean. The `zip` bump makes
-  `name_for_index` fallible; a non-UTF-8 entry name is now skipped instead
-  of aborting the extraction, and the bundled xray is still verified against
-  its upstream SHA-256 sidecar.
+  `rustls` 0.23.45 -> 0.23.46 (4 advisories), `quinn-proto` 0.11.16 ->
+  0.11.19 (5 advisories), `rustls-webpki` 0.103.14 -> 0.103.16
+  (RUSTSEC-2026-0382) and `webpki-roots` 0.26.11 -> 1.0.10
+  (RUSTSEC-2026-0381, distrusted emSign intermediates). `cargo audit` is
+  clean. The `zip` bump makes `name_for_index` fallible; a non-UTF-8 entry
+  name is now skipped instead of aborting the extraction, and the bundled
+  xray is still verified against its upstream SHA-256 sidecar. The
+  `webpki-roots` 0.26 line has no patched release, so the direct dependency
+  moves to the fixed 1.0 line.
 
 ## [0.15.0] - 2026-09-19
 
