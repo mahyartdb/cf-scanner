@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mahyartdb/cf-scanner"
+    "url": "git+https://github.com/mahyartdb/cf-scanner.git"
   },
   "bin": {
     "cf-scanner": "bin/cf-scanner.js"
