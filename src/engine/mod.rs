@@ -616,6 +616,16 @@ mod tests {
         }
     }
 
+    /// WHY: the "consumer parked" tests block a worker thread in the event
+    /// callback and then wait for the scan to finish, which means thousands
+    /// of probes have to squeeze through the remaining worker thread. On a
+    /// loaded CI runner (the matrix runs ubuntu/windows/macos plus the
+    /// coverage job at the same time) that comfortably exceeds the 2s the
+    /// cheap "scan started" waits need. The assertions are about delivery,
+    /// not about speed, so give these a budget a slow runner can meet while
+    /// a genuine hang still fails.
+    const PARKED_CONSUMER_SCAN_TIMEOUT: Duration = Duration::from_secs(30);
+
     #[test]
     fn colo_filter_matching_is_case_insensitive_and_unknown_colo_passes() {
         let filter = vec!["HKG".to_owned(), "NRT".to_owned()];
@@ -978,7 +988,7 @@ mod tests {
                 (summary, events)
             }
         });
-        wait_until(Duration::from_secs(2), || !c.is_running()).await;
+        wait_until(PARKED_CONSUMER_SCAN_TIMEOUT, || !c.is_running()).await;
         let _ = release_tx.send(());
         let (summary, events) = handle.await.unwrap();
         assert_eq!(summary.scanned, 5000);
@@ -1152,7 +1162,7 @@ mod tests {
                 (summary, events)
             }
         });
-        wait_until(Duration::from_secs(2), || !c.is_running()).await;
+        wait_until(PARKED_CONSUMER_SCAN_TIMEOUT, || !c.is_running()).await;
         let _ = park_tx.send(());
         let (summary, events) = handle.await.unwrap();
         assert_eq!(summary.found, 1024);
