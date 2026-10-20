@@ -59,7 +59,7 @@ jobs:
         with:
           persist-credentials: false
           submodules: recursive
-      - uses: dtolnay/rust-toolchain@1.88
+      - uses: dtolnay/rust-toolchain@1.120
       - name: Add rustfmt + clippy
         run: rustup component add rustfmt clippy
       - name: Test
@@ -81,7 +81,7 @@ jobs:
         with:
           persist-credentials: false
           submodules: recursive
-      - uses: dtolnay/rust-toolchain@1.88
+      - uses: dtolnay/rust-toolchain@1.120
       - name: Add cross-targets
         run: rustup target add aarch64-unknown-linux-gnu
       - uses: Swatinem/rust-cache@v2

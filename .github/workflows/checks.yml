@@ -20,7 +20,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.88
+      - uses: dtolnay/rust-toolchain@1.120
       - name: Add rustfmt + clippy
         run: rustup component add rustfmt clippy
       - uses: Swatinem/rust-cache@v2
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.88
+      - uses: dtolnay/rust-toolchain@1.120
       - name: Add llvm-tools-preview
         run: rustup component add llvm-tools-preview
       - uses: taiki-e/install-action@cargo-llvm-cov
@@ -113,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.88
+      - uses: dtolnay/rust-toolchain@1.120
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: false
