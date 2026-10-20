@@ -1,20 +1,129 @@
-/target
+# ---------------------------------------------------------------------------
+# Rust / Cargo
+# ---------------------------------------------------------------------------
+# All build output (debug, release, cross-compiled targets, llvm-cov).
+/target/
+
+# Cargo.lock IS tracked on purpose: cf-scanner ships a binary, so the
+# lockfile is part of the reproducible build. Do not ignore it.
+
+# Machine-local cargo config (mirrors, rustflags, custom runners).
+.cargo/config.toml
+.cargo/config
+
+# Stray editor backups of Rust sources.
+**/*.rs.bk
+
+# Windows linker / compiler droppings.
 *.pdb
+*.ilk
+*.exp
+*.lib
+*.obj
+
+# ---------------------------------------------------------------------------
+# Node / npm (the npm/ wrapper package)
+# ---------------------------------------------------------------------------
+node_modules/
+.npm/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+.pnpm-store/
+
+# ---------------------------------------------------------------------------
+# Build, packaging & release artifacts
+# ---------------------------------------------------------------------------
+/dist/
+/artifacts/
+cargo-dist/
+
+# cargo-dist / npm pack / archive output.
+*.tgz
+*.tar.gz
+*.zip
+*.dmg
+*.msi
+*.AppImage
+*.exe.map
+*.dSYM/
+
+# Partial download left behind by build.rs when a bundle step fails.
+data/bundled/*.tmp
+
+# NOTE: data/bundled/xray and data/bundled/xray.exe are TRACKED 0-byte
+# placeholders. `--features dist-bundle-xray` overwrites them with the real
+# binary, which dirties the tree. Restore the placeholders with:
+#   git restore data/bundled/xray data/bundled/xray.exe
+# The CI `placeholder-guard` job fails any tracked file over 1 MB.
+
+# ---------------------------------------------------------------------------
+# Coverage & profiling
+# ---------------------------------------------------------------------------
+lcov.info
+*.lcov
+/coverage/
+*.profraw
+*.profdata
+/tarpaulin-report.html
+/criterion/
+
+# ---------------------------------------------------------------------------
+# GeoIP database
+# ---------------------------------------------------------------------------
+# build.rs downloads the pinned DB-IP mmdb into OUT_DIR; never commit it.
+*.mmdb
+# Local geoip cache backup (survives cargo clean).
+.geoip-cache/
+
+# ---------------------------------------------------------------------------
+# Secrets & local-only state
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# The CLI stores the WARP identity, trial xray configs and exports in its
+# data dir. It lives outside the repo by default, but a local
+# CF_SCANNER_DATA_DIR pointing into the checkout would drop these here.
+/.cf-scanner-data/
+/data-dir/
+identity.json
+last-scan.json
+
+# ---------------------------------------------------------------------------
+# Test, coverage & agent scratch
+# ---------------------------------------------------------------------------
+PROGRESS.md
+*.orig
+*.rej
+*.bak
+*.tmp
+*.log
+
+# ---------------------------------------------------------------------------
+# Editor & OS
+# ---------------------------------------------------------------------------
 .idea/
 .vscode/
 *.swp
+*.swo
+*~
 .DS_Store
-/dist/
-cargo-dist/
+Thumbs.db
+ehthumbs.db
+desktop.ini
 
-.pi/
-
-.ruff_cache/
-
-# stale artifacts from the removed UI era (pure-CLI since 2026-09-02)
+# ---------------------------------------------------------------------------
+# Stale artifacts from the removed UI era (pure-CLI since 2026-09-02)
+# ---------------------------------------------------------------------------
 /ui/
 /.playwright-mcp/
-*.log
+.pi/
+.ruff_cache/
+.pytest_cache/
 mig-*.png
-# local geoip cache backup (survives cargo clean)
-.geoip-cache/
