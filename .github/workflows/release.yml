@@ -328,7 +328,7 @@ jobs:
       - name: Verify RELEASE_TAG matches the released tag
         run: |
           grep -q "RELEASE_TAG = \"${{ needs.plan.outputs.tag }}\"" npm/cf-scanner/install.js
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
