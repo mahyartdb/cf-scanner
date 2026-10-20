@@ -22,7 +22,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.88
       - name: Add rustfmt + clippy
         run: rustup component add rustfmt clippy
@@ -46,7 +46,7 @@ jobs:
     name: coverage (llvm-cov)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.88
       - name: Add llvm-tools-preview
         run: rustup component add llvm-tools-preview
@@ -65,7 +65,7 @@ jobs:
     name: no tracked file > 1MB
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Fail on oversized tracked files
         shell: bash
         run: |
@@ -85,7 +85,7 @@ jobs:
     name: xray pin parity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Assert pinned tag + bundle/probe parity
         shell: bash
         run: |
@@ -115,7 +115,7 @@ jobs:
     name: cargo audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@1.88
       - uses: Swatinem/rust-cache@v2
         with:
@@ -130,7 +130,7 @@ jobs:
     name: version parity (Cargo.toml == npm == RELEASE_TAG)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Check version parity
         shell: bash
         run: |
