@@ -47,6 +47,18 @@ pub(crate) fn clear_asn_cache_for_tests() {
         .clear();
 }
 
+/// WHY: the ASN cache is process-lifetime global state and six tests clear
+/// it. The test harness runs tests in parallel threads, so one test's
+/// clear can wipe another test's entry mid-test - that is how
+/// `enrich_caches_lookups_across_calls` failed on a loaded CI runner: its
+/// cached entry vanished and the panic-on-fetch impl was reached instead
+/// of a cache hit. Serializing the tests that touch the cache makes them
+/// independent of each other's timing. Same pattern as
+/// `paths::test_env::DATA_DIR_LOCK`.
+#[cfg(test)]
+pub(crate) static ASN_CACHE_LOCK: std::sync::LazyLock<tokio::sync::Mutex<()>> =
+    std::sync::LazyLock::new(|| tokio::sync::Mutex::new(()));
+
 fn ipwho_url(ip: IpAddr) -> String {
     format!("https://ipwho.is/{ip}")
 }
@@ -284,6 +296,7 @@ mod tests {
 
     #[tokio::test]
     async fn enrich_empty_results_is_a_no_op() {
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = seeded_controller(&[]);
         assert_eq!(enrich_working_with(scripted(vec![]), &c).await, 0);
@@ -291,6 +304,7 @@ mod tests {
 
     #[tokio::test]
     async fn enrich_counts_only_successful_lookups_and_annotates_the_verdict() {
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = seeded_controller(&["1.1.1.1", "8.8.8.8"]);
         let fetch = scripted(vec![
@@ -318,6 +332,7 @@ mod tests {
     #[tokio::test]
     async fn enrich_annotates_every_port_of_the_same_ip() {
         use crate::api::types::Verdict;
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = seeded_controller(&["1.1.1.1"]);
         // A second port for the same IP: enrichment applies to all of them.
@@ -343,6 +358,7 @@ mod tests {
 
     #[tokio::test]
     async fn enrich_all_lookups_fail_is_silent_zero() {
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = seeded_controller(&["1.1.1.1", "8.8.8.8"]);
         assert_eq!(enrich_working_with(scripted(vec![]), &c).await, 0);
@@ -355,6 +371,7 @@ mod tests {
     async fn enrich_skips_failed_endpoints_without_a_lookup() {
         use crate::api::types::Verdict;
         use std::sync::atomic::{AtomicU64, Ordering};
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = Arc::new(ScanController::new(Arc::new(
             crate::probe::FakeTransport::new(),
@@ -435,6 +452,7 @@ mod tests {
     #[tokio::test]
     async fn enrich_caches_lookups_across_calls() {
         use std::sync::atomic::{AtomicU64, Ordering};
+        let _guard = ASN_CACHE_LOCK.lock().await;
         clear_asn_cache_for_tests();
         let c = seeded_controller(&["192.0.2.21"]);
         struct Counting(AtomicU64);
