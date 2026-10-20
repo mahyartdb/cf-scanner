@@ -714,7 +714,14 @@ fn extract_xray_from_zip(zip_bytes: &[u8], dest: &Path) -> Result<()> {
 
 fn find_entry(archive: &zip::ZipArchive<std::io::Cursor<&[u8]>>, exe: &str) -> Result<usize> {
     for i in 0..archive.len() {
-        let name = archive.name_for_index(i).unwrap_or("");
+        // WHY: zip 9 makes the name fallible (a non-UTF-8 entry name is an
+        // error, where zip 7 yielded None). A name we cannot decode is not a
+        // match, so skip it and keep scanning - one odd entry must never
+        // abort the extraction of the entry we are actually after.
+        let Some(Ok(name)) = archive.name_for_index(i) else {
+            continue;
+        };
+        let name: &str = &name;
         let base = name.rsplit('/').next().unwrap_or(name);
         if base == exe {
             return Ok(i);
@@ -1320,7 +1327,10 @@ mod tests {
         let zip_bytes = buf.into_inner();
         let archive = zip::ZipArchive::new(std::io::Cursor::new(&zip_bytes[..])).unwrap();
         let idx = find_entry(&archive, exe_name()).unwrap();
-        let name = archive.name_for_index(idx).unwrap().to_owned();
+        let Some(Ok(name)) = archive.name_for_index(idx) else {
+            panic!("entry {idx} must have a decodable name");
+        };
+        let name: &str = &name;
         assert_eq!(name.rsplit('/').next().unwrap(), exe_name());
 
         let mut empty = std::io::Cursor::new(Vec::new());
