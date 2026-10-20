@@ -1,0 +1,29 @@
+version: 2
+
+updates:
+  # Rust dependencies. The crate ships a binary, so Cargo.lock is tracked and
+  # every bump is reviewed as a lockfile diff.
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - dependencies
+      - rust
+
+  # Keep the CI actions (checkout, toolchain, caches, artifact upload) current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - dependencies
+      - ci

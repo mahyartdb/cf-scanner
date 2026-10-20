@@ -1,0 +1,72 @@
+name: Bug report
+description: Something in cf-scanner does not work as documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please do **not** paste subscription URLs,
+        share URIs or WARP private keys — they are credentials. Redact them.
+
+  - type: input
+    id: version
+    attributes:
+      label: cf-scanner version
+      description: Output of `cf-scanner --version`
+      placeholder: "cf-scanner 0.15.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it?
+      options:
+        - npm
+        - standalone binary / installer
+        - cargo install
+        - built from source
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: OS and architecture
+      placeholder: "Windows 11 x64"
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: The exact command you ran
+      description: Include all flags. Redact any credential in the arguments.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: |
+        Paste the stderr output. If `--json-errors` produced an error object on
+        stdout, paste that too.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Relevant config, network shape (ISP, throttling), etc.
