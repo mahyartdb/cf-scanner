@@ -19,7 +19,7 @@ try {
     console.error("  npm i -g @qmahyar/cf-scanner");
     console.error("");
     console.error(
-      "Standalone archives are also available at https://github.com/qmahyar/cf-scanner/releases"
+      "Standalone archives are also available at https://github.com/mahyartdb/cf-scanner/releases"
     );
     process.exit(2);
   }

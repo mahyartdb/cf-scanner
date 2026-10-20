@@ -8,7 +8,7 @@ const https = require("https");
 const path = require("path");
 
 
-const REPO = "qmahyar/cf-scanner";
+const REPO = "mahyartdb/cf-scanner";
 const VERSION = require("./package.json").version;
 const RELEASE_TAG = "v0.15.0";
 

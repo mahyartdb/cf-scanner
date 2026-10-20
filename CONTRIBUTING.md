@@ -10,7 +10,7 @@ The toolchain is pinned to **Rust 1.88** (edition 2024) by
 purpose.
 
 ```bash
-git clone https://github.com/QMahyar/cf-scanner.git
+git clone https://github.com/mahyartdb/cf-scanner.git
 cd cf-scanner
 cargo build --all-targets --locked
 ```

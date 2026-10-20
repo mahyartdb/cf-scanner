@@ -5,7 +5,7 @@ edition = "2024"
 description = "Find working Cloudflare IPs/endpoints on ISP-restricted networks"
 license = "MIT"
 authors = ["qmahyar"]
-repository = "https://github.com/qmahyar/cf-scanner"
+repository = "https://github.com/mahyartdb/cf-scanner"
 rust-version = "1.88"
 
 [package.metadata.wix]

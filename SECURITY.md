@@ -5,7 +5,7 @@
 Please **do not open a public issue** for a security problem.
 
 Report it privately via
-[GitHub Security Advisories](https://github.com/QMahyar/cf-scanner/security/advisories/new)
+[GitHub Security Advisories](https://github.com/mahyartdb/cf-scanner/security/advisories/new)
 ("Report a vulnerability"). Include the affected version, the platform, a
 reproduction, and the impact you observed.
 

@@ -2,7 +2,7 @@
 
 Find working Cloudflare endpoints on restricted networks.
 
-This package downloads a prebuilt binary from [GitHub Releases](https://github.com/QMahyar/cf-scanner/releases) during `npm install`.
+This package downloads a prebuilt binary from [GitHub Releases](https://github.com/mahyartdb/cf-scanner/releases) during `npm install`.
 
 ## Install
 
@@ -42,7 +42,7 @@ The npm version and the GitHub release tag can differ: `install.js` pins the dow
 
 ## Manual Installation
 
-If the automatic download fails, you can install manually from the [Releases page](https://github.com/QMahyar/cf-scanner/releases).
+If the automatic download fails, you can install manually from the [Releases page](https://github.com/mahyartdb/cf-scanner/releases).
 
 ## Skip Binary Download
 

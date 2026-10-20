@@ -26,7 +26,7 @@ helper) into `bin/`. Set `CFSCANNER_SKIP_INSTALL=1` to skip the download.
 ### Standalone binaries
 
 Grab the archive for your platform from
-[Releases](https://github.com/QMahyar/cf-scanner/releases). Published targets:
+[Releases](https://github.com/mahyartdb/cf-scanner/releases). Published targets:
 
 | Platform | Target | Installers |
 |---|---|---|
