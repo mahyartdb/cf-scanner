@@ -1,4 +1,6 @@
-# T01 — check-sub concurrent probing (ordered)
+# T01 - check-sub concurrent probing (ordered)
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec: `specs/hardening-spec.md` stories 1-2.
 

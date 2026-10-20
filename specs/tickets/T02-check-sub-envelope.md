@@ -1,4 +1,6 @@
-# T02 — check-sub NDJSON envelope + JSON-safe aggregate
+# T02 - check-sub NDJSON envelope + JSON-safe aggregate
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec stories 3-4.
 

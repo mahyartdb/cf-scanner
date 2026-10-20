@@ -1,4 +1,6 @@
-# T05 — probe path: loss, idle-hold, shutdown, header reads
+# T05 - probe path: loss, idle-hold, shutdown, header reads
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec stories 9, 13-14.
 

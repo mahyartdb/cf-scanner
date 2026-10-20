@@ -1,4 +1,6 @@
-# T07 — engine core: phase2 lock, store, envelopes, ASN
+# T07 - engine core: phase2 lock, store, envelopes, ASN
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec stories 12, 15-16, 21.
 

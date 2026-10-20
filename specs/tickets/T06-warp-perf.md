@@ -1,4 +1,6 @@
-# T06 — WARP perf: preflight, port-gate, sockets, jitter
+# T06 - WARP perf: preflight, port-gate, sockets, jitter
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec stories 10-11.
 

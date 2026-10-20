@@ -1,5 +1,7 @@
 # T08 — Xray, ports, sanitizer, wizard, build, secrets
 
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
+
 Spec stories 19-20, 22-26.
 
 ## Goal

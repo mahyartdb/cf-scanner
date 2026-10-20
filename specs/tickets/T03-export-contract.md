@@ -1,4 +1,6 @@
-# T03 — export stdout purity + bundle fail-fast + registry + LiveExport
+# T03 - export stdout purity + bundle fail-fast + registry + LiveExport
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec stories 5-7, 17-18.
 

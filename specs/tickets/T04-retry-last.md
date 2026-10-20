@@ -1,4 +1,6 @@
-# T04 — retry-last explicit conflicts
+# T04 - retry-last explicit conflicts
+
+**Status:** Done — shipped in PR #53 (`hardening/spec-batch-T01-T08`).
 
 Spec story 8.
 
