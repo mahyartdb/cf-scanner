@@ -10,7 +10,7 @@ const path = require("path");
 
 const REPO = "mahyartdb/cf-scanner";
 const VERSION = require("./package.json").version;
-const RELEASE_TAG = "v0.15.0";
+const RELEASE_TAG = "v0.15.1";
 
 const TARGETS = {
   "linux-x64": "x86_64-unknown-linux-gnu",

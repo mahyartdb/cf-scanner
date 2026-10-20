@@ -5,12 +5,37 @@ Added / Changed / Fixed / Deprecated / Removed / Security, newest on top.
 
 ## [Unreleased]
 
+## [0.15.1] - 2026-10-21
+
 ### Changed
 - **check-sub NDJSON envelope + JSON-safe aggregate.** Every row now carries
   `"type":"check_result"` so one NDJSON parser handles both scan and
   check-sub streams; aggregate rows for unparseable lines use
   `"config_index":null` instead of the `18446744073709551615` (`usize::MAX`)
   sentinel, which exceeds JS 2^53.
+
+### Fixed
+- **npm install pointed at a non-existent GitHub account.** Every repo link in
+  the project - npm's `install.js` download URL, the WiX `ARPHELPLINK`, the
+  Cargo and npm package metadata, the docs - pointed at
+  `github.com/QMahyar/cf-scanner`, but that account does not exist; the repo
+  is `github.com/mahyartdb/cf-scanner`. `npm install -g @qmahyar/cf-scanner`
+  therefore failed for every user. All links now resolve.
+- **Two CI-only test flakes.** The parked-consumer engine tests gave a scan
+  that drives thousands of probes a 2s budget, which a loaded CI runner can
+  exceed; it is now 30s, and the assertions are about delivery, not speed.
+  The ASN cache is process-lifetime global state that six tests cleared, so a
+  test running in parallel could wipe another test's cache hit mid-test; the
+  tests that touch it are now serialized behind a test-only mutex.
+
+### Security
+- **9 RustSec advisories cleared.** `zip` 7.2.0 -> 9.0.5 (RUSTSEC-2026-0368,
+  `ZipArchive::extract` creating symlinks outside the destination),
+  `rustls` 0.23.45 -> 0.23.46 (4 advisories) and `quinn-proto` 0.11.16 ->
+  0.11.19 (5 advisories). `cargo audit` is clean. The `zip` bump makes
+  `name_for_index` fallible; a non-UTF-8 entry name is now skipped instead
+  of aborting the extraction, and the bundled xray is still verified against
+  its upstream SHA-256 sidecar.
 
 ## [0.15.0] - 2026-09-19
 
@@ -1075,6 +1100,9 @@ Changes merged by the `review/*` branches land here.
 - `custom_cidrs` now REPLACE the bundled ranges (was: merged in addition);
   exclusions still apply to custom ranges.
 
+[0.15.1]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.15.1
+[0.15.0]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.15.0
+[0.14.0]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.14.0
 [0.13.0]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.13.0
 [0.12.2]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.12.2
 [0.12.1]: https://github.com/mahyartdb/cf-scanner/releases/tag/v0.12.1
