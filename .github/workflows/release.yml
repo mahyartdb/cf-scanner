@@ -222,7 +222,7 @@ jobs:
           fi
           if ! cargo sbom --cargo-package cf-scanner > cf-scanner.spdx.json 2>sbom.err; then
             cat sbom.err >&2
-            echo "cargo sbom failed — skipping SBOM (see ADR-012)" >&2
+            echo "cargo sbom failed — skipping SBOM" >&2
             echo "sbom_path=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -299,20 +299,6 @@ jobs:
           echo "$ANNOUNCEMENT_BODY" > $RUNNER_TEMP/notes.txt
 
           gh release create "${{ needs.plan.outputs.tag }}" --target "$RELEASE_COMMIT" $PRERELEASE_FLAG --title "$ANNOUNCEMENT_TITLE" --notes-file "$RUNNER_TEMP/notes.txt" artifacts/*
-
-  announce:
-    needs:
-      - plan
-      - host
-    if: ${{ always() && needs.host.result == 'success' }}
-    runs-on: "ubuntu-22.04"
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-          submodules: recursive
 
   npm-publish:
     needs:

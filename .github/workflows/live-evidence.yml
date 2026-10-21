@@ -43,11 +43,3 @@ jobs:
         run: >-
           cargo test --locked --test live_smoke -- --ignored --nocapture
           && cargo test --locked --test cli_scan_agent -- --ignored --nocapture
-      - name: Upload evidence
-        if: ${{ env.CFSCANNER_SUB_URL != '' && always() }}
-        uses: actions/upload-artifact@v7
-        with:
-          name: live-evidence
-          path: |
-            target/live-evidence/
-          if-no-files-found: ignore
