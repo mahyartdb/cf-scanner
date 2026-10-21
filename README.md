@@ -21,7 +21,7 @@ npm install -g @qmahyar/cf-scanner
 
 The `postinstall` script detects your OS/arch, downloads the matching prebuilt
 archive from GitHub Releases, and unpacks the binary (plus its bundled xray
-helper) into `bin/`. Set `CFSCANNER_SKIP_INSTALL=1` to skip the download.
+helper) into `bin/`. Set `CF_SCANNER_SKIP_INSTALL=1` to skip the download.
 
 ### Standalone binaries
 
@@ -99,7 +99,7 @@ Run `cf-scanner <command> --help` for the full flag list.
 | `--probe tcp\|tls\|http` | Phase-1 probe protocol (default `tls`) |
 | `--speed-test` | Download an 8 MiB sample per verified endpoint and record MB/s |
 | `--export FILE` | Write results to a file (atomic tmp+rename) |
-| `--export-live FILE` | Append NDJSON results as they arrive (crash-safe) |
+| `--export-live FILE` | Stream NDJSON results as they arrive (crash-safe; truncates an existing file) |
 | `--export-format <name>` | Output format, see below |
 
 ## Output contract
@@ -107,7 +107,8 @@ Run `cf-scanner <command> --help` for the full flag list.
 This is a stable contract — scripts depend on it.
 
 - **stdout** carries NDJSON events only (`scan`, `check-sub`), ending with a
-  summary object. `--export -` writes to stdout instead.
+  summary object. `--export -` is rejected: the export blob would corrupt that
+  stream, so exports always go to a file.
 - **stderr** carries human progress and diagnostics.
 - `--verbose` adds per-IP diagnostic lines **on stderr only**.
 - `--json-errors` adds `{"type":"error",...}` on stdout when the program fails;
