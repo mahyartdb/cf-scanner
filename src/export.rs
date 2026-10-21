@@ -882,10 +882,7 @@ fn atomic_write_file(dest: &std::path::Path, body: &[u8]) -> std::io::Result<()>
     let result = (|| {
         f.write_all(body)?;
         f.sync_all()?;
-        #[cfg(windows)]
-        {
-            let _ = std::fs::remove_file(dest);
-        }
+        // rename replaces atomically on Windows (MOVEFILE_REPLACE_EXISTING).
         std::fs::rename(&tmp, dest)?;
         // WHY: rename preserves the tmp's locked-down ACL same-volume, but
         // re-assert best-effort: a concurrent writer may replace dest between

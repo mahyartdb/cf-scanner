@@ -392,10 +392,6 @@ pub fn write_secret_atomic(dest: &std::path::Path, data: &[u8]) -> Result<()> {
             file.write_all(data)?;
             file.sync_all()?;
             drop(file);
-            #[cfg(windows)]
-            {
-                let _ = std::fs::remove_file(dest);
-            }
             std::fs::rename(&tmp, dest)?;
             #[cfg(windows)]
             let _ = lock_down_to_owner(dest);

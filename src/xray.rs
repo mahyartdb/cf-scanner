@@ -636,12 +636,6 @@ pub async fn download_binary(fetch: &impl BinaryFetch) -> Result<PathBuf> {
         extract_xray_from_zip(&zip, &tmp)?;
         make_executable(&tmp)?;
         let _gate = crate::paths::data_write_guard();
-        #[cfg(windows)]
-        {
-            // Windows rename does not replace: remove first so a verified
-            // re-download heals a corrupt install instead of failing.
-            let _ = std::fs::remove_file(&install_dest);
-        }
         // Cleanup the tmp on any failure below so secret-adjacent bytes
         // never linger under a .tmp- sibling.
         let install_result = (|| -> Result<()> {
@@ -659,10 +653,6 @@ pub async fn download_binary(fetch: &impl BinaryFetch) -> Result<PathBuf> {
                 random_u32()
             ));
             std::fs::write(&dgst_tmp, format!("SHA2-256= {digest}\n"))?;
-            #[cfg(windows)]
-            {
-                let _ = std::fs::remove_file(&dgst_dest);
-            }
             std::fs::rename(&dgst_tmp, &dgst_dest)?;
             Ok(())
         })();
