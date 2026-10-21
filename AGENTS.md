@@ -27,14 +27,14 @@ Toolchain pinned to 1.88 by `rust-toolchain.toml` (edition 2024). CI runs the sa
 
 ## Pins that must stay in sync
 
-- Version triple: `Cargo.toml` version == `npm/cf-scanner/package.json` version == `RELEASE_TAG` in `npm/cf-scanner/install.js`. CI `version-parity` fails otherwise. Current `0.15.0`.
+- Version triple: `Cargo.toml` version == `npm/cf-scanner/package.json` version == `RELEASE_TAG` in `npm/cf-scanner/install.js`. CI `version-parity` fails otherwise. Current `0.15.2`.
 - Xray pin: `data/xray-version.txt` (vX.Y.Z) must be read by both `src/xray.rs` and `build.rs`; CI `xray-parity` greps both and checks the `XTLS/Xray-core` release tag exists.
 
 ## Runtime I/O contract (do not regress)
 
 - stdout = NDJSON events only (`scan`, `check-sub`), ending with a summary object. stderr = human progress/diagnostics.
 - `--verbose` adds per-IP diagnostic lines on stderr only. `--json-errors` adds `{"type":"error",...}` on stdout on failure (stderr keeps human text).
-- `--export FILE --export-format <name>` is atomic tmp+rename (`0600`, owner-only DACL on Windows). `--export-live FILE` is crash-safe append + fsync. The two conflict; `--export-live -` is rejected (`-` = stdout). Formats registry is `src/export.rs::FORMATS`; help text derives from it.
+- `--export FILE --export-format <name>` is atomic tmp+rename (`0600`, owner-only DACL on Windows). `--export-live FILE` is a crash-safe streaming write with per-row fsync (truncates an existing file). The two conflict; `--export-live -` is rejected (`-` = stdout). Formats registry is `src/export.rs::FORMATS`; help text derives from it.
 
 ## Architecture notes
 
