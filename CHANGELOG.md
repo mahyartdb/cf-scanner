@@ -5,6 +5,24 @@ Added / Changed / Fixed / Deprecated / Removed / Security, newest on top.
 
 ## [Unreleased]
 
+## [0.15.2] - 2026-10-21
+
+### Changed
+- **npm releases use trusted publishing (OIDC) instead of an npm token.**
+  The `npm-publish` job authenticates with the workflow's GitHub OIDC
+  identity, so no long-lived `NPM_TOKEN` secret exists to leak or rotate.
+  The job moves to Node 24 because the handshake needs npm CLI 11.5.1 or
+  newer, and a guard step fails loudly if the bundled npm ever regresses
+  below that floor. Provenance attestations are still produced on publish.
+
+### Fixed
+- **0.15.1 never reached npm, so the npm channel served a broken 0.15.0.**
+  The 0.15.1 publish job exited `ENEEDAUTH` because the token secret was
+  unset; npm users stayed on 0.15.0, whose `install.js` still downloaded
+  from the non-existent `qmahyar/cf-scanner` and failed with a 404. 0.15.2
+  is the first npm release carrying the 0.15.1 fixes (correct repository
+  URLs, cleared RustSec advisories), so npm jumps 0.15.0 -> 0.15.2.
+
 ## [0.15.1] - 2026-10-21
 
 ### Changed
