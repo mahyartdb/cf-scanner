@@ -123,7 +123,7 @@ fn default_probe_sni() -> ServerName<'static> {
 /// round-robin; under concurrency the counter still spreads consecutive
 /// probes across names with no RNG and no extra dials. (True per-worker
 /// pinning would be unobservable anyway: task-to-worker assignment already
-/// races. The injectable-transport seam stays untouched by design, ADR-011.)
+/// races. The injectable-transport seam stays untouched by design.)
 fn pick_sni(
     snis: &[ServerName<'static>],
     hosts: &[String],

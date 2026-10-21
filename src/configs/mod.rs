@@ -1453,8 +1453,8 @@ mod tests {
 mod httpupgrade_tests {
     use super::*;
 
-    // Pins the HTTPUpgrade claim in docs/spec.md §9 item 9: the URI parses,
-    // but the transport is NOT modeled — it falls through to plain TCP.
+    // Pins the HTTPUpgrade claim: the URI parses, but the transport is NOT
+    // modeled — it falls through to plain TCP.
     #[test]
     fn httpupgrade_uris_parse_with_the_transport_unmodeled() {
         let spec = parse_uri(
