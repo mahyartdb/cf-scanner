@@ -44,7 +44,7 @@ windows = { version = "0.62.2", default-features = false, features = ["Win32_Fou
 [dev-dependencies]
 axum = "0.8"
 proptest = "1"
-rcgen = "0.13"
+rcgen = "0.14"
 
 [features]
 dist-bundle-xray = []
